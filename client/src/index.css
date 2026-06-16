@@ -454,6 +454,10 @@ button {
   transition: var(--transition-smooth);
 }
 
+.gallery-view-more-overlay {
+  display: none;
+}
+
 .gallery-caption {
   color: var(--bg-cream);
   font-family: var(--font-serif);
@@ -876,18 +880,58 @@ button {
 
 @media (max-width: 768px) {
   .highlights {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 50px 5%;
-  }
-  
-  .highlight-card::after {
-    display: none !important;
+    display: none;
   }
   
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     padding: 0 4%;
+  }
+
+  .gallery-item {
+    height: 280px;
+  }
+  
+  .gallery-item:nth-child(5) {
+    display: none;
+  }
+
+  .gallery-item.view-more-container .gallery-overlay {
+    display: none !important;
+  }
+
+  .gallery-view-more-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(45, 74, 54, 0.82);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-cream);
+    gap: 8px;
+    z-index: 5;
+    transition: var(--transition-smooth);
+    border-radius: 6px;
+  }
+  
+  .view-more-plus {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--accent-gold);
+    line-height: 1;
+  }
+  
+  .view-more-text {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  
+  .gallery-item.view-more-container:hover .gallery-view-more-overlay {
+    background: rgba(45, 74, 54, 0.92);
   }
   
   .footer-grid {
@@ -907,12 +951,12 @@ button {
   }
   
   .gallery-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     padding: 0 5%;
   }
   
   .gallery-item {
-    height: 280px;
+    height: 180px;
   }
 }
 
@@ -1110,6 +1154,13 @@ button {
   .review-card {
     padding: 25px;
     min-height: 320px;
+  }
+  .review-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .google-title {
     font-size: 1.8rem;

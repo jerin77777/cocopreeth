@@ -298,11 +298,15 @@ function App() {
             </div>
           </div>
 
-          <div className="gallery-item">
+          <div className="gallery-item view-more-container">
             <img src="/images/gallery_tea.png" alt="Outdoor table setup" className="gallery-img" />
             <div className="gallery-overlay">
               <h4 className="gallery-caption">Sunrise Breakfast</h4>
               <span className="gallery-sub">Scenic Dining</span>
+            </div>
+            <div className="gallery-view-more-overlay">
+              <span className="view-more-plus">+</span>
+              <span className="view-more-text">View More</span>
             </div>
           </div>
 
