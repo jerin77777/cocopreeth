@@ -206,6 +206,7 @@ button {
   position: relative;
   height: 90vh;
   margin-top: 90px;
+  overflow: hidden;
   background-image: linear-gradient(
       to right,
       rgba(251, 249, 244, 0.98) 35%,
@@ -221,6 +222,22 @@ button {
   padding: 0 7%;
 }
 
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.78) 24%,
+    rgba(255, 255, 255, 0.42) 48%,
+    rgba(255, 255, 255, 0.12) 72%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
 .hidden-hero-spacer {
   height: 90px;
   background-color: var(--bg-cream);
@@ -228,7 +245,8 @@ button {
 
 .hero-content {
   max-width: 550px;
-  z-index: 10;
+  position: relative;
+  z-index: 2;
   animation: fadeIn 1.2s ease-out;
 }
 
@@ -825,6 +843,16 @@ button {
     background-position: center;
     justify-content: center;
     text-align: center;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.72) 42%,
+      rgba(255, 255, 255, 0.28) 78%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
   }
   
   .hero-content {
