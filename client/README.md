@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# coco preeth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Exported WebForge Studio React Website.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install dependencies:
+   ```bash
+   npm install
+   # or pnpm install / yarn
+   ```
 
-## React Compiler
+2. Run local dev server:
+   ```bash
+   npm run dev
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. Routes:
+   - **Public Website**: `http://localhost:5173/`
+   - **Studio Admin Suite**: `http://localhost:5173/admin`
 
-## Expanding the ESLint configuration
+## Dynamic Page Architecture
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project connects directly to **WebForge Firestore** at runtime:
+- All pages, routes, and schemas are fetched dynamically for project `coco-preeth`.
+- Any changes published in the WebForge Studio or the local `/admin` panel update the live site instantly without rebuilding.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Firebase Setup
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+This project uses **two separate Firebase instances**:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1. WebForge Firebase (page schema source)
+Connects to WebForge's Firestore to fetch your page layouts at runtime.
+These credentials are pre-filled and managed by WebForge — **do not change them**.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Env vars: `VITE_WEBFORGE_FIREBASE_API_KEY`, `VITE_WEBFORGE_FIREBASE_AUTH_DOMAIN`, `VITE_WEBFORGE_FIREBASE_PROJECT_ID`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Import: `import { webforgeDb } from './lib/firebase'`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 2. Your Project Firebase (website data)
+Your own Firebase project for all website-specific data — products, orders, users, blog posts, etc.
+These credentials come from the Firebase project you configured in WebForge Settings.
+
+Env vars: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`
+
+Import: `import { db } from './lib/firebase'`
+
+> Both instances are already initialised in `src/lib/firebase.ts`. Use `webforgeDb` to
+> read page schemas and `db` for everything else in your website.
